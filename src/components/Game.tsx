@@ -4,7 +4,7 @@
 import { useEffect, useReducer, useState, type ReactNode } from "react";
 import {
   reducer, initGame, RAINBOW, WEATHER, CONFIG,
-  isGrowing, predictedColor,
+  isGrowing, predictedColor, plotRatio,
   type Plot, type ColorName, type Weather,
 } from "@/lib/game";
 import { spriteFor, plantHeight } from "@/lib/sprites";
@@ -57,20 +57,20 @@ function BedCell({ plot, weatherSun, onAct }: { plot: Plot; weatherSun: number; 
     <div onClick={onAct} style={{ justifySelf: "center", alignSelf: "end", display: "flex",
       flexDirection: "column", alignItems: "center", gap: 10, cursor: "pointer" }}>
       {!dead && filled > 0 && (
-        <div style={{ display: "flex", gap: 5 }}>
+        <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
           {Array.from({ length: CONFIG.MAX_WATER_PER_PLOT }, (_, i) => (
-            <span key={i} style={{ width: 12, height: 16, borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
-              background: i < filled ? "#7fb3e0" : "rgba(127,179,224,.28)" }} />
+            <span key={i} style={{ width: 24, height: 32, borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+              background: i < filled ? "#5691cc" : "rgba(120,158,200,.42)" }} />
           ))}
         </div>
       )}
       {showNeeds && (
-        <span style={{ fontWeight: 800, fontSize: 17, color: "#b5762f", background: "#fbead0",
-          padding: "7px 18px", borderRadius: 999, whiteSpace: "nowrap" }}>needs water</span>
+        <span style={{ fontWeight: 800, fontSize: 28, color: "#b5762f", background: "#fbead0",
+          padding: "9px 22px", borderRadius: 999, whiteSpace: "nowrap", marginBottom: 8 }}>needs water</span>
       )}
       {dead && (
-        <span style={{ fontWeight: 800, fontSize: 17, color: "#8a8170", background: "#efe7d6",
-          padding: "7px 18px", borderRadius: 999, whiteSpace: "nowrap" }}>wilted</span>
+        <span style={{ fontWeight: 800, fontSize: 28, color: "#8a8170", background: "#efe7d6",
+          padding: "9px 22px", borderRadius: 999, whiteSpace: "nowrap" }}>wilted</span>
       )}
       <img
         key={plot.stage}
@@ -88,6 +88,24 @@ function BedCell({ plot, weatherSun, onAct }: { plot: Plot; weatherSun: number; 
   );
 }
 
+/* A small warm↔cool spectrum bar with a marker at the plant's current sun:water
+   position, so it's easy to see where a growing plant sits on the color spectrum. */
+function SpectrumBar({ ratio }: { ratio: number | null }) {
+  const grad = "linear-gradient(90deg,#b4503f,#c9793f,#c9a24a,#7c9152,#5b84ab,#5e5aa6,#8f5a9c)";
+  const pos = ratio == null ? null : Math.max(0, Math.min(1, (0.72 - ratio) / 0.44));
+  return (
+    <div style={{ position: "relative", width: "100%", height: 12 }}>
+      <div style={{ position: "absolute", inset: 0, borderRadius: 999, background: grad,
+        opacity: pos == null ? 0.4 : 0.95, boxShadow: "inset 0 1px 2px rgba(60,50,20,.22)" }} />
+      {pos != null && (
+        <div style={{ position: "absolute", top: "50%", left: `${pos * 100}%`, transform: "translate(-50%,-50%)",
+          width: 16, height: 16, borderRadius: "50%", background: "#fffdf8", border: "3px solid #4a4331",
+          boxShadow: "0 1px 4px rgba(0,0,0,.35)" }} />
+      )}
+    </div>
+  );
+}
+
 /* ---------- per-plant label + action button ----------
    The header slot doubles as the COLOR INDICATOR: for a growing plant it shows the
    dahlia color/variety it is heading toward (live), locking once the bud opens. */
@@ -97,22 +115,22 @@ function PlotLabel({ plot, canWater, onWater, onReplant, onPlant, onClear }: {
 }) {
   const growing = isGrowing(plot);
   const kind = plot.stage === "bloom" ? "bloom" : growing ? "growing" : plot.stage === "dead" ? "dead" : "empty";
-  let dot = "rgba(70,63,46,.3)", labelCol = "#8a8170", name = "";
+  let labelCol = "#8a8170", name = "";
   let btn = <button className="btn btn-cream" style={{ width: "100%", fontSize: 23, padding: "16px 0" }} onClick={onPlant}>🌰 Plant</button>;
   let predictAttr = "";
 
   if (plot.stage === "bloom") {
     const r = rc(plot.bloomColor)!;
-    dot = r.hex; labelCol = r.labelHex ?? r.hex; name = `${r.label} ${r.variety}`;
+    labelCol = r.labelHex ?? r.hex; name = `${r.label} ${r.variety}`;
     predictAttr = r.name;
     btn = <button className="btn btn-cream" style={{ width: "100%", fontSize: 23, padding: "16px 0" }} onClick={onReplant}>✂ Replant</button>;
   } else if (growing) {
     const pc = plot.bloomColor ?? predictedColor(plot);
     if (pc) {
       const r = rc(pc)!;
-      dot = r.hex; labelCol = r.labelHex ?? r.hex; name = `${r.label} ${r.variety}`; predictAttr = r.name;
+      labelCol = r.labelHex ?? r.hex; name = `${r.label} ${r.variety}`; predictAttr = r.name;
     } else {
-      dot = "#c9c3b2"; labelCol = "#8a8170"; name = "color forming…";
+      labelCol = "#8a8170"; name = "color forming…";
     }
     btn = <button className="btn btn-blue" style={{ width: "100%", fontSize: 23, padding: "16px 0" }} disabled={!canWater} onClick={onWater}>💧 Water</button>;
   } else if (plot.stage === "dead") {
@@ -122,19 +140,13 @@ function PlotLabel({ plot, canWater, onWater, onReplant, onPlant, onClear }: {
     name = "Empty bed";
   }
 
-  const rainbowDot = "conic-gradient(from 0deg,#b4503f,#c9793f,#c9a24a,#7c9152,#5b84ab,#5e5aa6,#8f5a9c,#b4503f)";
-  const forming = growing && !predictAttr;
-
   return (
     <div className="plotlabel" data-plot={plot.id} data-kind={kind} data-color={plot.bloomColor ?? ""} data-predict={predictAttr}
       style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 11, width: "100%", minHeight: 72 }}>
-        <span style={{ width: 13, height: 13, borderRadius: "50%", flex: "none",
-          background: forming ? rainbowDot : dot }} />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, width: "100%", minHeight: 72 }}>
         <span className="serif" style={{ fontWeight: 700, fontSize: 30, lineHeight: 1.04, color: labelCol,
           textAlign: "center", whiteSpace: "normal" }}>{name}</span>
-        <span style={{ width: 13, height: 13, borderRadius: "50%", flex: "none",
-          background: forming ? rainbowDot : dot }} />
+        {growing && <SpectrumBar ratio={plotRatio(plot)} />}
       </div>
       {btn}
     </div>
