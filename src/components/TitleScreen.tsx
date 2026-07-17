@@ -49,7 +49,7 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
       {/* title + subtitle + play */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 388, textAlign: "center",
         animation: "titleRise .8s ease .5s both" }}>
-        <div className="serif" style={{ fontWeight: 600, fontSize: 192, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
+        <div className="serif" style={{ fontWeight: 600, fontSize: 240, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
           Flower<span style={{ color: "#a6693f" }}>Power</span>
         </div>
         <div style={{ marginTop: 18, fontWeight: 700, fontSize: 44, color: "#6b6250", letterSpacing: ".3px" }}>
@@ -58,7 +58,7 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
         <button
           className="btn btn-green"
           onClick={onPlay}
-          style={{ marginTop: 34, fontSize: 22, padding: "18px 56px", letterSpacing: ".4px",
+          style={{ marginTop: 34, fontSize: 44, padding: "18px 56px", letterSpacing: ".4px",
             boxShadow: "0 10px 0 #566d48, 0 14px 24px rgba(60,50,20,.25)" }}
         >
           Play
