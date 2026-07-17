@@ -7,13 +7,13 @@ import { bloomSrc } from "@/lib/asset";
 // Direction 1a — Arc bouquet. Per-flower baseline translateY+rotate (the fan),
 // with a gentle grow-in on mount that settles into the idle sway.
 const ARC = [
-  { c: "red",    ty: 30, rot: -10, h: 190, sway: 5.6, d: 0.10 },
-  { c: "orange", ty: 10, rot: -6,  h: 220, sway: 5.2, d: 0.50 },
-  { c: "yellow", ty: 0,  rot: -2,  h: 245, sway: 6.0, d: 0.20 },
-  { c: "green",  ty: 0,  rot: 0,   h: 255, sway: 5.4, d: 0.00 },
-  { c: "blue",   ty: 0,  rot: 2,   h: 245, sway: 5.8, d: 0.35 },
-  { c: "indigo", ty: 10, rot: 6,   h: 220, sway: 5.3, d: 0.15 },
-  { c: "violet", ty: 30, rot: 10,  h: 190, sway: 5.7, d: 0.45 },
+  { c: "red",    ty: 0, rot: -10, h: 190, sway: 5.6, d: 0.10 },
+  { c: "orange", ty: 0, rot: -6,  h: 220, sway: 5.2, d: 0.50 },
+  { c: "yellow", ty: 0, rot: -2,  h: 245, sway: 6.0, d: 0.20 },
+  { c: "green",  ty: 0, rot: 0,   h: 255, sway: 5.4, d: 0.00 },
+  { c: "blue",   ty: 0, rot: 2,   h: 245, sway: 5.8, d: 0.35 },
+  { c: "indigo", ty: 0, rot: 6,   h: 220, sway: 5.3, d: 0.15 },
+  { c: "violet", ty: 0, rot: 10,  h: 190, sway: 5.7, d: 0.45 },
 ];
 
 export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
