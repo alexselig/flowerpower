@@ -52,7 +52,7 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
         <div className="serif" style={{ fontWeight: 600, fontSize: 240, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
           Flower<span style={{ color: "#a6693f" }}>Power</span>
         </div>
-        <div style={{ marginTop: 18, fontWeight: 700, fontSize: 44, color: "#6b6250", letterSpacing: ".3px" }}>
+        <div style={{ marginTop: -30, fontWeight: 700, fontSize: 44, color: "#6b6250", letterSpacing: ".3px" }}>
           Grow a dahlia of every color to fill the rainbow
         </div>
         <button
