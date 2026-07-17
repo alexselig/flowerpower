@@ -4,16 +4,17 @@
 import Stage from "./Stage";
 import { bloomSrc } from "@/lib/asset";
 
-// Direction 1a — Arc bouquet. Per-flower baseline translateY+rotate (the fan),
-// with a gentle grow-in on mount that settles into the idle sway.
+// Direction 1a — Arc bouquet. Flowers rise and grow toward the center (green),
+// with the two ends level on the baseline, forming a symmetric arc. Each flower
+// gets a gentle grow-in on mount that settles into the idle sway.
 const ARC = [
-  { c: "red",    ty: 0, rot: -10, h: 190, sway: 5.6, d: 0.10 },
-  { c: "orange", ty: 0, rot: -6,  h: 220, sway: 5.2, d: 0.50 },
-  { c: "yellow", ty: 0, rot: -2,  h: 245, sway: 6.0, d: 0.20 },
-  { c: "green",  ty: 0, rot: 0,   h: 255, sway: 5.4, d: 0.00 },
-  { c: "blue",   ty: 0, rot: 2,   h: 245, sway: 5.8, d: 0.35 },
-  { c: "indigo", ty: 0, rot: 6,   h: 220, sway: 5.3, d: 0.15 },
-  { c: "violet", ty: 0, rot: 10,  h: 190, sway: 5.7, d: 0.45 },
+  { c: "red",    ty: 0,   rot: -10, h: 186, sway: 5.6, d: 0.10 },
+  { c: "orange", ty: -18, rot: -6,  h: 214, sway: 5.2, d: 0.50 },
+  { c: "yellow", ty: -32, rot: -2,  h: 240, sway: 6.0, d: 0.20 },
+  { c: "green",  ty: -40, rot: 0,   h: 262, sway: 5.4, d: 0.00 },
+  { c: "blue",   ty: -32, rot: 2,   h: 240, sway: 5.8, d: 0.35 },
+  { c: "indigo", ty: -18, rot: 6,   h: 214, sway: 5.3, d: 0.15 },
+  { c: "violet", ty: 0,   rot: 10,  h: 186, sway: 5.7, d: 0.45 },
 ];
 
 export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
@@ -52,7 +53,7 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
         <div className="serif" style={{ fontWeight: 600, fontSize: 240, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
           Flower<span style={{ color: "#a6693f" }}>Power</span>
         </div>
-        <div style={{ marginTop: -30, fontWeight: 700, fontSize: 44, color: "#6b6250", letterSpacing: ".3px" }}>
+        <div style={{ marginTop: -30, fontWeight: 700, fontSize: 48, color: "#6b6250", letterSpacing: ".3px" }}>
           Grow a dahlia of every color to fill the rainbow
         </div>
         <button
