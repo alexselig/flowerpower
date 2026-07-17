@@ -57,6 +57,16 @@ img { -webkit-user-drag: none; user-select: none; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes titleRise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes twinkle { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+@keyframes firefly {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(20px, -16px); }
+  50%  { transform: translate(-12px, -30px); }
+  75%  { transform: translate(-24px, -10px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes dropIn { from { opacity: 0; transform: translateY(-26px) scale(.6); } 65% { opacity: 1; } to { opacity: 1; transform: none; } }
 
 .sway { animation: swayFlower 6s ease-in-out infinite; transform-origin: bottom center; }
 .pop { animation: popIn .45s cubic-bezier(.2, .8, .3, 1.3); }

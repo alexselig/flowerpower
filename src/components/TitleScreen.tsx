@@ -19,10 +19,13 @@ const ARC = [
 export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
   return (
     <Stage w={1280} h={720} background="linear-gradient(180deg,#f6efe2 0%,#f1e9d9 55%,#e9dfc9 100%)">
-      {/* soft ground */}
+      {/* soft ground — full-width floor, kept unscaled */}
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110,
         background: "linear-gradient(180deg,rgba(139,120,78,0) 0%,rgba(139,120,78,.16) 100%)" }} />
 
+      {/* flowers + title composition scaled to 50%, centered on the stage */}
+      <div style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0,
+        transform: "scale(0.5)", transformOrigin: "center center" }}>
       {/* arc of flowers */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 56, height: 300,
         display: "flex", justifyContent: "center", alignItems: "flex-end", gap: 6 }}>
@@ -46,10 +49,10 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
       {/* title + subtitle + play */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 388, textAlign: "center",
         animation: "titleRise .8s ease .5s both" }}>
-        <div className="serif" style={{ fontWeight: 600, fontSize: 96, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
+        <div className="serif" style={{ fontWeight: 600, fontSize: 192, lineHeight: 1, color: "#4a4331", letterSpacing: ".5px" }}>
           Flower<span style={{ color: "#a6693f" }}>Power</span>
         </div>
-        <div style={{ marginTop: 18, fontWeight: 700, fontSize: 22, color: "#6b6250", letterSpacing: ".3px" }}>
+        <div style={{ marginTop: 18, fontWeight: 700, fontSize: 44, color: "#6b6250", letterSpacing: ".3px" }}>
           Grow a dahlia of every color to fill the rainbow
         </div>
         <button
@@ -60,6 +63,7 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
         >
           Play
         </button>
+      </div>
       </div>
     </Stage>
   );

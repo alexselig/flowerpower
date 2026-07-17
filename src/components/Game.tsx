@@ -11,6 +11,7 @@ import { spriteFor, plantHeight } from "@/lib/sprites";
 import { bloomSrc } from "@/lib/asset";
 import Stage from "./Stage";
 import TitleScreen from "./TitleScreen";
+import Tutorial from "./Tutorial";
 
 const PAGE_BG = "linear-gradient(180deg,#dcebe9 0%,#eef1e1 38%,#f4efe1 68%,#ece2c8 100%)";
 const BED_FLOWER_H = 252;
@@ -168,7 +169,7 @@ const HELP_ROWS: { ring?: string; accent?: string; icon?: string; wheel?: boolea
 ];
 
 export default function Game() {
-  const [screen, setScreen] = useState<"title" | "playing">("title");
+  const [screen, setScreen] = useState<"title" | "tutorial" | "playing">("title");
   const [state, dispatch] = useReducer(reducer, undefined, () => initGame());
   const [modal, setModal] = useState<null | "help" | "log" | "win">(null);
   const [seenHelp, setSeenHelp] = useState(false);
@@ -181,7 +182,8 @@ export default function Game() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.won]);
 
-  if (screen === "title") return <TitleScreen onPlay={() => setScreen("playing")} />;
+  if (screen === "title") return <TitleScreen onPlay={() => setScreen("tutorial")} />;
+  if (screen === "tutorial") return <Tutorial onDone={() => { setSeenHelp(true); setScreen("playing"); }} />;
 
   const weatherSun = WEATHER[state.weather].sun;
   const canWater = state.waterLeft > 0;
