@@ -213,7 +213,7 @@ export default function Tutorial({ onDone }: { onDone: () => void }) {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 210 }}>
             {s.visual}
           </div>
-          <div style={{ height: 112, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ height: 112, position: "relative", top: -30, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div style={{ maxWidth: 760, textAlign: "center", fontSize: 23, lineHeight: 1.55, color: MUTED,
               fontWeight: 600, textWrap: "balance" }}>
               {s.body}
