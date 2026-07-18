@@ -24,9 +24,9 @@ export default function TitleScreen({ onPlay }: { onPlay: () => void }) {
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110,
         background: "linear-gradient(180deg,rgba(139,120,78,0) 0%,rgba(139,120,78,.16) 100%)" }} />
 
-      {/* flowers + title composition scaled to 50%, centered on the stage */}
+      {/* flowers + title composition scaled to 50%, centered on the stage, shifted up 50px */}
       <div style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0,
-        transform: "scale(0.5)", transformOrigin: "center center" }}>
+        transform: "translateY(-50px) scale(0.5)", transformOrigin: "center center" }}>
       {/* arc of flowers */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 56, height: 300,
         display: "flex", justifyContent: "center", alignItems: "flex-end", gap: 6 }}>
